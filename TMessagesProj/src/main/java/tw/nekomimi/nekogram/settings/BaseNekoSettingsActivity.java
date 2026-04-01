@@ -39,6 +39,7 @@ import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.ItemOptions;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.RecyclerListView;
+import org.telegram.ui.Components.ShareAlert;
 import org.telegram.ui.Components.SizeNotifierFrameLayout;
 import org.telegram.ui.Components.UItem;
 import org.telegram.ui.Components.URLSpanNoUnderline;
@@ -145,17 +146,21 @@ public abstract class BaseNekoSettingsActivity extends BaseFragment {
             var slug = item.slug;
             var key = getKey();
             if (key != null && item.enabled && !TextUtils.isEmpty(slug)) {
+                String link;
+                if ("copyReportId".equals(slug)) {
+                    link = String.format(Locale.US, "https://%s/nekosettings/%s", getMessagesController().linkPrefix, "reportId");
+                } else if ("checkUpdate".equals(slug)) {
+                    link = String.format(Locale.US, "https://%s/nekosettings/%s", getMessagesController().linkPrefix, "update");
+                } else {
+                    link = String.format(Locale.US, "https://%s/nekosettings/%s?r=%s", getMessagesController().linkPrefix, key, slug);
+                }
                 ItemOptions.makeOptions(this, view)
                         .setScrimViewBackground(listView.getClipBackground(view))
                         .add(R.drawable.msg_copy, LocaleController.getString(R.string.CopyLink), () -> {
-                            if ("copyReportId".equals(slug)) {
-                                AndroidUtilities.addToClipboard(String.format(Locale.getDefault(), "https://%s/nekosettings/%s", getMessagesController().linkPrefix, "reportId"));
-                            } else if ("checkUpdate".equals(slug)) {
-                                AndroidUtilities.addToClipboard(String.format(Locale.getDefault(), "https://%s/nekosettings/%s", getMessagesController().linkPrefix, "update"));
-                            } else {
-                                AndroidUtilities.addToClipboard(String.format(Locale.getDefault(), "https://%s/nekosettings/%s?r=%s", getMessagesController().linkPrefix, key, slug));
-                            }
+                            AndroidUtilities.addToClipboard(link);
                             BulletinFactory.of(this).createCopyLinkBulletin().show();
+                        }).add(R.drawable.msg_share, LocaleController.getString(R.string.ShareLink), () -> {
+                            showDialog(new ShareAlert(getParentActivity(), null, link, false, link, false));
                         })
                         .setMinWidth(190)
                         .show();
