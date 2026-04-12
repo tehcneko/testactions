@@ -8,8 +8,6 @@ import tw.nekomimi.nekogram.helpers.UserHelper;
 @Obfuscate
 public class Extra {
 
-    public static int APP_ID = BuildConfig.API_ID;
-    public static String APP_HASH = BuildConfig.API_HASH;
     public static String TWPIC_BOT_USERNAME = BuildConfig.TWPIC_BOT_USERNAME;
     public static String SENTRY_DSN = BuildConfig.SENTRY_DSN;
 
@@ -28,6 +26,9 @@ public class Extra {
     };
 
     public static UserHelper.BotInfo getHelperBot() {
+        if (BuildConfig.HELPER_BOT_USERNAME == null) {
+            return null;
+        }
         return HELPER_BOT;
     }
 
