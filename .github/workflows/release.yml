@@ -32,3 +32,14 @@ jobs:
           files: |
             apk/**/*.apk
             bundle/**/*.aab
+
+      - name: Upload to Telegram
+        uses: nekogram/upload-with-mtcute@22239d24c68aba7d093d3395535461fb3ee82d69
+        with:
+          api-id: ${{ secrets.API_ID }}
+          api-hash: ${{ secrets.API_HASH }}
+          bot-token: ${{ secrets.RELEASE_BOT_TOKEN }}
+          chat-id: ${{ secrets.RELEASE_CHANNEL_ID }}
+          files: |
+            apk/**/*.apk
+            bundle/**/*.aab
