@@ -19,7 +19,7 @@ jobs:
 
 
       - name: Upload to Telegram
-        uses: nekogram/upload-with-mtcute@83b2a73b2da56b052d1a22ab9e16f3e8cd68ff5f
+        uses: nekogram/upload-with-mtcute@e196262c35b722c4c8eac79c835ec6dbd109e4b8
         with:
           api-id: ${{ secrets.API_ID }}
           api-hash: ${{ secrets.API_HASH }}
