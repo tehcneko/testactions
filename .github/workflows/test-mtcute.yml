@@ -1,0 +1,28 @@
+name: Release
+on:
+  push:
+    branches: [ "mtcute" ]
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create Sample Files
+        run: |
+          mkdir -p samples
+          for i in {1..8}; do
+            echo "Sample file $i" > "samples/sample$i.txt"
+          done
+
+
+      - name: Upload to Telegram
+        uses: nekogram/upload-with-mtcute@83b2a73b2da56b052d1a22ab9e16f3e8cd68ff5f
+        with:
+          api-id: ${{ secrets.API_ID }}
+          api-hash: ${{ secrets.API_HASH }}
+          bot-token: ${{ secrets.RELEASE_BOT_TOKEN }}
+          chat-id: ${{ secrets.RELEASE_CHANNEL_ID }}
+          files: samples/*
