@@ -379,7 +379,7 @@ public abstract class BaseNekoSettingsActivity extends BaseFragment {
                 return position;
             });
         } else {
-            unknown.run();
+            if (unknown != null) unknown.run();
         }
     }
 
