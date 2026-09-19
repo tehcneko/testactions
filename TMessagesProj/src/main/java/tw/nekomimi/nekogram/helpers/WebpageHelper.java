@@ -14,7 +14,7 @@ public class WebpageHelper {
     );
 
     public static boolean isXFormerlyTwitter(String siteName) {
-        return "x (formerly twitter)".endsWith(siteName) || "twitter".equals(siteName);
+        return siteName != null && ("x (formerly twitter)".endsWith(siteName) || "twitter".equals(siteName));
     }
 
     public static Uri toNormalUrl(String host, Uri uri) {
